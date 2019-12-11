@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Trello Board</title>
+    <style>
+        .col-4 {
+            min-height: 250px;
+
+        }
+
+        ul {
+            min-height: 250px;
+            border: 1px solid gray;
+
+        }
+
+        .draggable li {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container border shadow mt-4">
+        <div class="row">
+            <div class="col-4 border px-0">
+                <p class="bg-dark text-white text-center">DONE</p>
+
+                <ul class="list-unstyled text-center draggable dropable">
+                    <li id="t1" draggable="true" class="bg-info mb-2 text-white">Buy Coffee</li>
+                    <li id="t2" draggable="true" class="bg-info mb-2 text-white">Buy Sugar</li>
+                    <li id="t3" draggable="true" class="bg-info mb-2 text-white">Eat Pizza</li>
+                </ul>
+            </div>
+            <div class="col-4 border px-0">
+                <p class="bg-warning text-dark text-center">IN PROGRESS</p>
+                <ul id="l2" class="list-unstyled text-center draggable dropable">
+                    <li draggable="true"></li>
+                    <li draggable="true"></li>
+                    <li draggable="true"></li>
+                </ul>
+            </div>
+            <div class="col-4 border px-0">
+                <p class="bg-success text-dark text-center">DONE</p>
+                <ul class="list-unstyled text-center draggable dropable" >
+                    <li draggable="true"></li>
+                    <li draggable="true"></li>
+                    <li draggable="true"></li>
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", init);
+        function init() {
+            const draggableLis = document.querySelectorAll(".draggable li")
+            draggableLis.forEach(loopLis);
+
+            function loopLis(li, index) {
+                console.log(li, index);
+                li.addEventListener("dragstart", dragStartHandler);
+            }
+
+            const dropableUl = document.querySelectorAll(".dropable")
+            dropableUl.forEach(loopUl);
+            // const drop = document.querySelector("#l2");
+
+            function loopUl(ul){
+                ul.addEventListener("dragover",handleDragOver);
+                ul.addEventListener("drop",handleDrop);
+            }
+
+            // drop.addEventListener("dragover", handleDragOver);
+
+            // drop.addEventListener("drop", handleDrop);
+
+            // task1.addEventListener("dragstart",dragStartHandler);
+            // task2.addEventListener("dragstart",dragStartHandler);
+            // task3.addEventListener("dragstart",dragStartHandler);
+
+            function handleDrop(e) {
+
+                const id = e.dataTransfer.getData("text/plain");
+                
+                const li = document.querySelector("#" + id);
+           
+                e.target.appendChild(li);
+            }
+
+            function handleDragOver(e) {
+                e.preventDefault();
+            }
+
+            // task1.addEventListener("dragstart", dragStartHandler);
+
+            function dragStartHandler(e) {
+
+                e.dataTransfer.setData(
+                    "text/plain",
+                    e.target.id
+                );
+            }
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
